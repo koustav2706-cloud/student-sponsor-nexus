@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Zap } from "lucide-react";
+import { Menu, X, Zap, LogOut } from "lucide-react";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { user, signOut } = useAuth();
 
   return (
     <nav className="fixed top-0 w-full bg-background/95 backdrop-blur-sm border-b border-border z-50">
@@ -48,12 +50,26 @@ const Navigation = () => {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-3">
-            <Button variant="ghost" size="sm" asChild>
-              <Link to="/login">Login</Link>
-            </Button>
-            <Button variant="hero" size="sm" asChild>
-              <Link to="/signup">Get Started</Link>
-            </Button>
+            {user ? (
+              <>
+                <Button variant="ghost" size="sm" asChild>
+                  <Link to="/dashboard">Dashboard</Link>
+                </Button>
+                <Button variant="ghost" size="sm" onClick={signOut} className="gap-2">
+                  <LogOut className="h-4 w-4" />
+                  Sign Out
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button variant="ghost" size="sm" asChild>
+                  <Link to="/auth">Login</Link>
+                </Button>
+                <Button variant="hero" size="sm" asChild>
+                  <Link to="/auth">Get Started</Link>
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -98,12 +114,25 @@ const Navigation = () => {
                 Dashboard
               </Link>
               <div className="flex gap-2 px-3 py-2">
-                <Button variant="ghost" size="sm" className="flex-1" asChild>
-                  <Link to="/login" onClick={() => setIsOpen(false)}>Login</Link>
-                </Button>
-                <Button variant="hero" size="sm" className="flex-1" asChild>
-                  <Link to="/signup" onClick={() => setIsOpen(false)}>Get Started</Link>
-                </Button>
+                {user ? (
+                  <>
+                    <Button variant="ghost" size="sm" className="flex-1" asChild>
+                      <Link to="/dashboard" onClick={() => setIsOpen(false)}>Dashboard</Link>
+                    </Button>
+                    <Button variant="outline" size="sm" className="flex-1" onClick={() => {signOut(); setIsOpen(false);}}>
+                      Sign Out
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button variant="ghost" size="sm" className="flex-1" asChild>
+                      <Link to="/auth" onClick={() => setIsOpen(false)}>Login</Link>
+                    </Button>
+                    <Button variant="hero" size="sm" className="flex-1" asChild>
+                      <Link to="/auth" onClick={() => setIsOpen(false)}>Get Started</Link>
+                    </Button>
+                  </>
+                )}
               </div>
             </div>
           </div>

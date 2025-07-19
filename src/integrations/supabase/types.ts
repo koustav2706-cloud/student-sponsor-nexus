@@ -14,16 +14,196 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      events: {
+        Row: {
+          audience_size: number | null
+          budget_range: string | null
+          category: string | null
+          created_at: string
+          description: string | null
+          engagement_metrics: Json | null
+          event_date: string | null
+          id: string
+          location: string | null
+          organizer_id: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          audience_size?: number | null
+          budget_range?: string | null
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          engagement_metrics?: Json | null
+          event_date?: string | null
+          id?: string
+          location?: string | null
+          organizer_id: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          audience_size?: number | null
+          budget_range?: string | null
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          engagement_metrics?: Json | null
+          event_date?: string | null
+          id?: string
+          location?: string | null
+          organizer_id?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      matches: {
+        Row: {
+          created_at: string
+          event_id: string
+          id: string
+          match_score: number | null
+          sponsor_id: string
+          status: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          event_id: string
+          id?: string
+          match_score?: number | null
+          sponsor_id: string
+          status?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          event_id?: string
+          id?: string
+          match_score?: number | null
+          sponsor_id?: string
+          status?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "matches_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "matches_sponsor_id_fkey"
+            columns: ["sponsor_id"]
+            isOneToOne: false
+            referencedRelation: "sponsors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string
+          full_name: string | null
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          full_name?: string | null
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          full_name?: string | null
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      sponsors: {
+        Row: {
+          budget_range: string | null
+          company_name: string
+          created_at: string
+          id: string
+          industry: string | null
+          marketing_goals: string | null
+          target_demographics: Json | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          budget_range?: string | null
+          company_name: string
+          created_at?: string
+          id?: string
+          industry?: string | null
+          marketing_goals?: string | null
+          target_demographics?: Json | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          budget_range?: string | null
+          company_name?: string
+          created_at?: string
+          id?: string
+          industry?: string | null
+          marketing_goals?: string | null
+          target_demographics?: Json | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["user_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["user_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["user_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_current_user_role: {
+        Args: Record<PropertyKey, never>
+        Returns: Database["public"]["Enums"]["user_role"]
+      }
+      has_role: {
+        Args: {
+          _user_id: string
+          _role: Database["public"]["Enums"]["user_role"]
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      user_role: "student" | "sponsor"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +330,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      user_role: ["student", "sponsor"],
+    },
   },
 } as const

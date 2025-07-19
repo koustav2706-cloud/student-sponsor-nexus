@@ -1,31 +1,46 @@
-import Navigation from "@/components/Navigation";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/hooks/useAuth';
+import Navigation from '@/components/Navigation';
+import StudentDashboard from '@/components/dashboards/StudentDashboard';
+import SponsorDashboard from '@/components/dashboards/SponsorDashboard';
 
 const Dashboard = () => {
+  const { user, userRole, loading } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate('/auth');
+    }
+  }, [user, loading, navigate]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return null;
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
       <main className="pt-16">
-        <section className="py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
-              Dashboard
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-              Manage your sponsorships, track performance, and grow your partnerships.
-            </p>
-            <Card className="p-8 max-w-md mx-auto">
-              <h3 className="text-2xl font-semibold mb-4">Coming Soon</h3>
-              <p className="text-muted-foreground mb-6">
-                Your personalized dashboard is being built with powerful analytics and management tools.
-              </p>
-              <Button variant="hero" className="w-full">
-                Join Waitlist
-              </Button>
-            </Card>
+        {userRole === 'student' && <StudentDashboard />}
+        {userRole === 'sponsor' && <SponsorDashboard />}
+        {!userRole && (
+          <div className="flex items-center justify-center py-20">
+            <div className="text-center">
+              <h2 className="text-2xl font-bold mb-4">Setting up your account...</h2>
+              <p className="text-muted-foreground">Please wait while we configure your dashboard.</p>
+            </div>
           </div>
-        </section>
+        )}
       </main>
     </div>
   );
