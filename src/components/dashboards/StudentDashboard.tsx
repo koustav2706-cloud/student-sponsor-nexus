@@ -4,6 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import CreateEventForm from '@/components/events/CreateEventForm';
 import { 
   Plus, 
   Calendar, 
@@ -12,7 +13,10 @@ import {
   Target,
   Clock,
   CheckCircle,
-  XCircle
+  XCircle,
+  Eye,
+  Bell,
+  BarChart3
 } from 'lucide-react';
 
 interface Event {
@@ -43,6 +47,7 @@ const StudentDashboard = () => {
   const [events, setEvents] = useState<Event[]>([]);
   const [matches, setMatches] = useState<Match[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showCreateForm, setShowCreateForm] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -118,10 +123,49 @@ const StudentDashboard = () => {
           <h1 className="text-3xl font-bold text-foreground">Student Dashboard</h1>
           <p className="text-muted-foreground">Manage your events and connect with sponsors</p>
         </div>
-        <Button variant="hero" className="gap-2">
+        <Button variant="hero" className="gap-2" onClick={() => setShowCreateForm(true)}>
           <Plus className="h-4 w-4" />
           Create Event
         </Button>
+      </div>
+
+      {/* Quick Actions */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        <Card className="p-4 hover:shadow-card transition-all cursor-pointer" onClick={() => setShowCreateForm(true)}>
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-primary/10 rounded-lg">
+              <Plus className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <h3 className="font-medium">Create Event</h3>
+              <p className="text-sm text-muted-foreground">Start a new event</p>
+            </div>
+          </div>
+        </Card>
+        
+        <Card className="p-4 hover:shadow-card transition-all cursor-pointer">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-accent/10 rounded-lg">
+              <Bell className="h-5 w-5 text-accent" />
+            </div>
+            <div>
+              <h3 className="font-medium">Sponsor Requests</h3>
+              <p className="text-sm text-muted-foreground">{matches.filter(m => m.status === 'pending').length} pending</p>
+            </div>
+          </div>
+        </Card>
+        
+        <Card className="p-4 hover:shadow-card transition-all cursor-pointer">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-success/10 rounded-lg">
+              <BarChart3 className="h-5 w-5 text-success" />
+            </div>
+            <div>
+              <h3 className="font-medium">Analytics</h3>
+              <p className="text-sm text-muted-foreground">View performance</p>
+            </div>
+          </div>
+        </Card>
       </div>
 
       {/* Stats Cards */}
@@ -209,6 +253,13 @@ const StudentDashboard = () => {
                     {new Date(event.event_date).toLocaleDateString()}
                   </div>
                 </div>
+                <div className="flex justify-between items-center mt-3">
+                  <Badge variant="outline">{event.budget_range || 'Budget TBD'}</Badge>
+                  <Button variant="ghost" size="sm" className="gap-1">
+                    <Eye className="h-3 w-3" />
+                    View Details
+                  </Button>
+                </div>
               </div>
             ))}
             
@@ -265,6 +316,17 @@ const StudentDashboard = () => {
           </div>
         </Card>
       </div>
+
+      {/* Create Event Modal */}
+      {showCreateForm && (
+        <CreateEventForm
+          onClose={() => setShowCreateForm(false)}
+          onEventCreated={() => {
+            fetchEvents();
+            fetchMatches();
+          }}
+        />
+      )}
     </div>
   );
 };
