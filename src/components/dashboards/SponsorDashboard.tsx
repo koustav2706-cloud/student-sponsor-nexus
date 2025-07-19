@@ -1,19 +1,23 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
-import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import CompanyProfileForm from '@/components/sponsors/CompanyProfileForm';
+import EventDiscoveryFeed from '@/components/sponsors/EventDiscoveryFeed';
 import { 
-  Settings, 
-  Calendar, 
   Users, 
   TrendingUp, 
   Target,
   Clock,
   CheckCircle,
   XCircle,
-  Building2
+  Building2,
+  Search,
+  Heart,
+  BarChart3
 } from 'lucide-react';
 
 interface SponsorProfile {
@@ -120,10 +124,13 @@ const SponsorDashboard = () => {
             {sponsorProfile ? `Welcome back, ${sponsorProfile.company_name}` : 'Discover and sponsor student events'}
           </p>
         </div>
-        <Button variant="hero" className="gap-2">
-          <Settings className="h-4 w-4" />
-          {sponsorProfile ? 'Update Profile' : 'Complete Profile'}
-        </Button>
+        <CompanyProfileForm 
+          profile={sponsorProfile} 
+          onProfileUpdate={() => {
+            fetchSponsorProfile();
+            fetchMatches();
+          }} 
+        />
       </div>
 
       {/* Profile Setup Notice */}
@@ -137,7 +144,7 @@ const SponsorDashboard = () => {
                 Set up your company profile to start receiving event matches and connect with student organizations.
               </p>
             </div>
-            <Button variant="accent">Complete Profile</Button>
+            <CompanyProfileForm onProfileUpdate={fetchSponsorProfile} />
           </div>
         </Card>
       )}
