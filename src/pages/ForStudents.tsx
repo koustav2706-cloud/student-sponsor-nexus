@@ -1,6 +1,7 @@
 import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Link } from "react-router-dom";
 import { Users, Search, Trophy, Star } from "lucide-react";
 
 const ForStudents = () => {
@@ -21,9 +22,11 @@ const ForStudents = () => {
             <p className="text-xl text-primary-foreground/80 max-w-3xl mx-auto mb-8">
               Connect your student organization with sponsors who align with your values and goals.
             </p>
-            <Button variant="accent" size="xl">
-              Get Started Free
-              <Users className="ml-2 h-5 w-5" />
+            <Button variant="accent" size="xl" asChild>
+              <Link to="/auth">
+                Get Started Free
+                <Users className="ml-2 h-5 w-5" />
+              </Link>
             </Button>
           </div>
         </section>

@@ -1,6 +1,7 @@
 import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Link } from "react-router-dom";
 import { Target, TrendingUp, Users, BarChart3 } from "lucide-react";
 
 const ForSponsors = () => {
@@ -20,9 +21,11 @@ const ForSponsors = () => {
             <p className="text-xl text-primary-foreground/80 max-w-3xl mx-auto mb-8">
               Reach engaged student audiences through strategic event sponsorships with measurable ROI.
             </p>
-            <Button variant="accent" size="xl">
-              Start Sponsoring
-              <Target className="ml-2 h-5 w-5" />
+            <Button variant="accent" size="xl" asChild>
+              <Link to="/auth">
+                Start Sponsoring
+                <Target className="ml-2 h-5 w-5" />
+              </Link>
             </Button>
           </div>
         </section>

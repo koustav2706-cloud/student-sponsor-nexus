@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import { 
   Brain, 
   Users, 
@@ -140,13 +141,17 @@ const FeaturesSection = () => {
             Join thousands of organizations and sponsors who've found their perfect match.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="accent" size="xl" className="group">
-              Start For Students
-              <Users className="ml-2 h-5 w-5 group-hover:scale-110 transition-transform" />
+            <Button variant="accent" size="xl" className="group" asChild>
+              <Link to="/for-students">
+                Start For Students
+                <Users className="ml-2 h-5 w-5 group-hover:scale-110 transition-transform" />
+              </Link>
             </Button>
-            <Button variant="professional" size="xl" className="group">
-              Start For Sponsors
-              <Target className="ml-2 h-5 w-5 group-hover:scale-110 transition-transform" />
+            <Button variant="professional" size="xl" className="group" asChild>
+              <Link to="/for-sponsors">
+                Start For Sponsors
+                <Target className="ml-2 h-5 w-5 group-hover:scale-110 transition-transform" />
+              </Link>
             </Button>
           </div>
         </div>

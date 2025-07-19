@@ -2,6 +2,9 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
+import NotificationCenter from "@/components/notifications/NotificationCenter";
+import MessageCenter from "@/components/messaging/MessageCenter";
 import { Menu, X, Zap, LogOut } from "lucide-react";
 
 const Navigation = () => {
@@ -40,16 +43,17 @@ const Navigation = () => {
             >
               For Sponsors
             </Link>
-            <Link 
-              to="/dashboard" 
-              className="text-foreground hover:text-primary transition-colors font-medium"
-            >
-              Dashboard
-            </Link>
           </div>
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-3">
+            <ThemeToggle />
+            {user && (
+              <>
+                <NotificationCenter />
+                <MessageCenter />
+              </>
+            )}
             {user ? (
               <>
                 <Button variant="ghost" size="sm" asChild>
@@ -61,14 +65,9 @@ const Navigation = () => {
                 </Button>
               </>
             ) : (
-              <>
-                <Button variant="ghost" size="sm" asChild>
-                  <Link to="/auth">Login</Link>
-                </Button>
-                <Button variant="hero" size="sm" asChild>
-                  <Link to="/auth">Get Started</Link>
-                </Button>
-              </>
+              <Button variant="hero" size="sm" asChild>
+                <Link to="/auth">Get Started</Link>
+              </Button>
             )}
           </div>
 
@@ -106,13 +105,6 @@ const Navigation = () => {
               >
                 For Sponsors
               </Link>
-              <Link
-                to="/dashboard"
-                className="block px-3 py-2 text-foreground hover:text-primary transition-colors font-medium"
-                onClick={() => setIsOpen(false)}
-              >
-                Dashboard
-              </Link>
               <div className="flex gap-2 px-3 py-2">
                 {user ? (
                   <>
@@ -124,14 +116,9 @@ const Navigation = () => {
                     </Button>
                   </>
                 ) : (
-                  <>
-                    <Button variant="ghost" size="sm" className="flex-1" asChild>
-                      <Link to="/auth" onClick={() => setIsOpen(false)}>Login</Link>
-                    </Button>
-                    <Button variant="hero" size="sm" className="flex-1" asChild>
-                      <Link to="/auth" onClick={() => setIsOpen(false)}>Get Started</Link>
-                    </Button>
-                  </>
+                  <Button variant="hero" size="sm" className="w-full" asChild>
+                    <Link to="/auth" onClick={() => setIsOpen(false)}>Get Started</Link>
+                  </Button>
                 )}
               </div>
             </div>
