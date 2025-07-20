@@ -5,35 +5,39 @@ import { ArrowRight, Users, TrendingUp, Target } from "lucide-react";
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-gradient-hero overflow-hidden">
-      {/* Background Decorations */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
-      <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl animate-float"></div>
-      <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+    <section className="relative min-h-screen flex items-center justify-center bg-background bg-particles overflow-hidden">
+      {/* Enhanced Background */}
+      <div className="absolute inset-0 bg-aurora-pattern opacity-20"></div>
+      <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
+      
+      {/* Liquid Glass Orbs */}
+      <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-r from-primary/20 to-accent/20 rounded-full blur-3xl animate-liquid-float"></div>
+      <div className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-r from-accent/20 to-success/20 rounded-full blur-3xl animate-liquid-float" style={{ animationDelay: '4s' }}></div>
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-primary/10 to-accent/10 rounded-full blur-2xl animate-glow-pulse"></div>
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center">
           {/* Hero Badge */}
-          <div className="inline-flex items-center gap-2 bg-background/20 backdrop-blur-sm border border-primary/20 rounded-full px-4 py-2 mb-8 animate-fade-in">
-            <div className="w-2 h-2 bg-success rounded-full animate-pulse"></div>
-            <span className="text-sm font-medium text-primary-foreground">
-              #1 Sponsorship Matchmaking Platform
+          <div className="inline-flex items-center gap-2 glass-effect rounded-full px-6 py-3 mb-8 animate-fade-in border border-primary/30">
+            <div className="w-2 h-2 bg-success rounded-full animate-pulse shadow-sm shadow-success/50"></div>
+            <span className="text-sm font-medium text-foreground bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              #1 AI-Powered Sponsorship Platform
             </span>
           </div>
 
           {/* Main Headline */}
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-primary-foreground mb-6 animate-slide-up">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 animate-slide-up">
             Smart Sponsorship &{" "}
-            <span className="bg-gradient-to-r from-accent to-accent-light bg-clip-text text-transparent">
-              Brand Matchmaking
+            <span className="bg-gradient-to-r from-accent via-primary to-accent-light bg-clip-text text-transparent animate-glow-pulse">
+              AI Matchmaking
             </span>{" "}
-            Engine
+            Platform
           </h1>
 
           {/* Subheadline */}
-          <p className="text-xl md:text-2xl text-primary-foreground/80 max-w-4xl mx-auto mb-10 leading-relaxed animate-slide-up" style={{ animationDelay: '0.2s' }}>
+          <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto mb-10 leading-relaxed animate-slide-up" style={{ animationDelay: '0.2s' }}>
             Connect student organizations with perfect sponsors through AI-powered matching. 
-            Build meaningful partnerships that drive events and grow brands.
+            Build meaningful partnerships that drive events and grow brands with liquid precision.
           </p>
 
           {/* CTAs */}
@@ -54,17 +58,17 @@ const HeroSection = () => {
 
           {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto animate-slide-up" style={{ animationDelay: '0.6s' }}>
-            <Card className="p-6 bg-background/10 backdrop-blur-sm border-primary/20 hover:bg-background/20 transition-all duration-300 hover:scale-105">
-              <div className="text-3xl font-bold text-primary-foreground mb-2">500+</div>
-              <div className="text-primary-foreground/70">Student Organizations</div>
+            <Card className="glass-card p-8 text-center group">
+              <div className="text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform">500+</div>
+              <div className="text-muted-foreground">Student Organizations</div>
             </Card>
-            <Card className="p-6 bg-background/10 backdrop-blur-sm border-primary/20 hover:bg-background/20 transition-all duration-300 hover:scale-105">
-              <div className="text-3xl font-bold text-primary-foreground mb-2">1,200+</div>
-              <div className="text-primary-foreground/70">Active Sponsors</div>
+            <Card className="glass-card p-8 text-center group">
+              <div className="text-4xl font-bold bg-gradient-to-r from-accent to-success bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform">1,200+</div>
+              <div className="text-muted-foreground">Active Sponsors</div>
             </Card>
-            <Card className="p-6 bg-background/10 backdrop-blur-sm border-primary/20 hover:bg-background/20 transition-all duration-300 hover:scale-105">
-              <div className="text-3xl font-bold text-primary-foreground mb-2">$2M+</div>
-              <div className="text-primary-foreground/70">Sponsorships Matched</div>
+            <Card className="glass-card p-8 text-center group">
+              <div className="text-4xl font-bold bg-gradient-to-r from-success to-primary bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform">$2M+</div>
+              <div className="text-muted-foreground">Sponsorships Matched</div>
             </Card>
           </div>
         </div>
@@ -72,8 +76,8 @@ const HeroSection = () => {
 
       {/* Scroll Indicator */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 border-2 border-primary-foreground/30 rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-primary-foreground/30 rounded-full mt-2 animate-pulse"></div>
+        <div className="w-6 h-10 border-2 border-primary/50 rounded-full flex justify-center glass-effect">
+          <div className="w-1 h-3 bg-primary rounded-full mt-2 animate-pulse shadow-sm shadow-primary/50"></div>
         </div>
       </div>
     </section>

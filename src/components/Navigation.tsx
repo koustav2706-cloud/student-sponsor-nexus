@@ -2,25 +2,26 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "@/components/ui/theme-toggle";
 import NotificationCenter from "@/components/notifications/NotificationCenter";
 import MessageCenter from "@/components/messaging/MessageCenter";
-import { Menu, X, Zap, LogOut } from "lucide-react";
+import { Menu, X, Sparkles, LogOut } from "lucide-react";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user, signOut } = useAuth();
 
   return (
-    <nav className="fixed top-0 w-full bg-background/95 backdrop-blur-sm border-b border-border z-50">
+    <nav className="fixed top-0 w-full glass-nav backdrop-blur-xl border-b border-primary/20 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-            <div className="p-2 bg-gradient-primary rounded-lg">
-              <Zap className="h-6 w-6 text-primary-foreground" />
+          <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-all duration-300 group">
+            <div className="p-2 bg-gradient-primary rounded-xl shadow-lg group-hover:shadow-primary/25 transition-all duration-300 group-hover:scale-110">
+              <Sparkles className="h-6 w-6 text-primary-foreground animate-pulse" />
             </div>
-            <span className="text-xl font-bold text-primary">SponsorSync</span>
+            <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              SponsorSync
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -43,11 +44,22 @@ const Navigation = () => {
             >
               For Sponsors
             </Link>
+            <Link 
+              to="/demo-sponsors" 
+              className="text-foreground hover:text-accent transition-colors font-medium"
+            >
+              Demo Sponsors
+            </Link>
+            <Link 
+              to="/demo-events" 
+              className="text-foreground hover:text-success transition-colors font-medium"
+            >
+              Demo Events
+            </Link>
           </div>
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-3">
-            <ThemeToggle />
             {user && (
               <>
                 <NotificationCenter />
@@ -56,17 +68,17 @@ const Navigation = () => {
             )}
             {user ? (
               <>
-                <Button variant="ghost" size="sm" asChild>
+                <Button variant="ghost" size="sm" asChild className="glass-effect">
                   <Link to="/dashboard">Dashboard</Link>
                 </Button>
-                <Button variant="ghost" size="sm" onClick={signOut} className="gap-2">
+                <Button variant="ghost" size="sm" onClick={signOut} className="gap-2 glass-effect hover:bg-destructive/20">
                   <LogOut className="h-4 w-4" />
                   Sign Out
                 </Button>
               </>
             ) : (
-              <Button variant="hero" size="sm" asChild>
-                <Link to="/auth">Get Started</Link>
+              <Button variant="premium" size="sm" asChild>
+                <Link to="/auth">Join Now</Link>
               </Button>
             )}
           </div>
@@ -82,7 +94,7 @@ const Navigation = () => {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden border-t border-border bg-background/95 backdrop-blur-sm">
+          <div className="md:hidden border-t border-primary/20 glass-nav backdrop-blur-xl">
             <div className="px-2 pt-2 pb-3 space-y-1">
               <Link
                 to="/"
@@ -105,6 +117,20 @@ const Navigation = () => {
               >
                 For Sponsors
               </Link>
+              <Link
+                to="/demo-sponsors"
+                className="block px-3 py-2 text-foreground hover:text-accent transition-colors font-medium"
+                onClick={() => setIsOpen(false)}
+              >
+                Demo Sponsors
+              </Link>
+              <Link
+                to="/demo-events"
+                className="block px-3 py-2 text-foreground hover:text-success transition-colors font-medium"
+                onClick={() => setIsOpen(false)}
+              >
+                Demo Events
+              </Link>
               <div className="flex gap-2 px-3 py-2">
                 {user ? (
                   <>
@@ -116,8 +142,8 @@ const Navigation = () => {
                     </Button>
                   </>
                 ) : (
-                  <Button variant="hero" size="sm" className="w-full" asChild>
-                    <Link to="/auth" onClick={() => setIsOpen(false)}>Get Started</Link>
+                  <Button variant="premium" size="sm" className="w-full" asChild>
+                    <Link to="/auth" onClick={() => setIsOpen(false)}>Join Now</Link>
                   </Button>
                 )}
               </div>
