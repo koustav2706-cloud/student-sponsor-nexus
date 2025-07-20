@@ -84,11 +84,11 @@ const Auth = () => {
       <main className="pt-16 flex items-center justify-center py-20">
         <Card className="w-full max-w-md p-8 shadow-card neumorphic border-border/30">
           <div className="text-center mb-6">
-            <h1 className="text-2xl font-bold mb-2" style={{ color: 'hsl(220, 14%, 98%)', textShadow: '0 2px 4px rgba(0,0,0,0.3)' }}>
+            <h1 className="text-2xl font-bold text-foreground mb-2" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.3)' }}>
               Welcome to SponsorSync
             </h1>
             <p className="text-muted-foreground" style={{ color: 'hsl(220, 14%, 85%)' }}>
-              Connect students and sponsors through smart AI matchmaking
+              Connect students and sponsors through smart matchmaking
             </p>
           </div>
 
