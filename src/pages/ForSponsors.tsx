@@ -10,18 +10,18 @@ const ForSponsors = () => {
       <Navigation />
       <main className="pt-16">
         {/* Hero Section */}
-        <section className="bg-gradient-hero py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-4xl md:text-6xl font-bold text-primary-foreground mb-6">
+        <section className="relative py-20 z-10">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-20">
+            <h1 className="text-4xl md:text-6xl font-bold text-primary-foreground mb-6 relative z-30 opacity-100" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.3)' }}>
               Discover High-Impact{" "}
               <span className="bg-gradient-to-r from-accent to-accent-light bg-clip-text text-transparent">
                 Student Events
               </span>
             </h1>
-            <p className="text-xl text-primary-foreground/80 max-w-3xl mx-auto mb-8">
+            <p className="text-xl text-primary-foreground/90 max-w-3xl mx-auto mb-8 relative z-30 opacity-100" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}>
               Reach engaged student audiences through strategic event sponsorships with measurable ROI.
             </p>
-            <Button variant="accent" size="xl" asChild>
+            <Button variant="accent" size="xl" asChild className="relative z-30">
               <Link to="/auth">
                 Start Sponsoring
                 <Target className="ml-2 h-5 w-5" />

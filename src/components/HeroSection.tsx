@@ -5,7 +5,7 @@ import { ArrowRight, Users, TrendingUp, Target } from "lucide-react";
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden z-10">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden z-10 bg-transparent">
       {/* Background Decorations */}
       <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
       <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl animate-float"></div>
@@ -14,7 +14,7 @@ const HeroSection = () => {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center">
           {/* Hero Badge */}
-          <div className="inline-flex items-center gap-2 bg-background/20 backdrop-blur-sm border border-primary/20 rounded-full px-4 py-2 mb-8 animate-fade-in">
+          <div className="inline-flex items-center gap-2 bg-background/20 backdrop-blur-sm border border-primary/20 rounded-full px-4 py-2 mb-8 animate-fade-in relative z-30">
             <div className="w-2 h-2 bg-success rounded-full animate-pulse"></div>
             <span className="text-sm font-medium text-primary-foreground">
               #1 Sponsorship Matchmaking Platform
@@ -22,7 +22,7 @@ const HeroSection = () => {
           </div>
 
           {/* Main Headline */}
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-primary-foreground mb-6 animate-slide-up relative z-20">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-primary-foreground mb-6 relative z-30 opacity-100" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.3)' }}>
             Smart Sponsorship &{" "}
             <span className="bg-gradient-to-r from-accent to-accent-light bg-clip-text text-transparent">
               Brand Matchmaking
@@ -31,7 +31,7 @@ const HeroSection = () => {
           </h1>
 
           {/* Subheadline */}
-          <p className="text-xl md:text-2xl text-primary-foreground/80 max-w-4xl mx-auto mb-10 leading-relaxed animate-slide-up relative z-20" style={{ animationDelay: '0.2s' }}>
+          <p className="text-xl md:text-2xl text-primary-foreground/90 max-w-4xl mx-auto mb-10 leading-relaxed relative z-30 opacity-100" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}>
             Connect student organizations with perfect sponsors through AI-powered matching. 
             Build meaningful partnerships that drive events and grow brands.
           </p>
