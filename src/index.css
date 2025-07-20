@@ -140,6 +140,32 @@ All colors MUST be HSL for consistency across light/dark modes.
     -moz-osx-font-smoothing: grayscale;
   }
 
+  /* Force dark mode styles */
+  :root {
+    color-scheme: dark;
+  }
+
+  /* Enhanced text visibility */
+  h1, h2, h3, h4, h5, h6 {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Improved contrast for all text */
+  .text-muted-foreground {
+    color: hsl(220, 14%, 85%) !important;
+  }
+
+  /* Better visibility for cards and backgrounds */
+  .bg-card {
+    background: linear-gradient(145deg, hsl(220, 27%, 12%), hsl(220, 17%, 20%)) !important;
+    border: 1px solid hsl(220, 17%, 25%) !important;
+  }
+
+  /* Enhanced image visibility */
+  img {
+    filter: brightness(1.1) contrast(1.1);
+  }
+
   /* Enhanced scrollbar */
   ::-webkit-scrollbar {
     width: 8px;

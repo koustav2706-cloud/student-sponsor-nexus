@@ -59,6 +59,41 @@ export type Database = {
         }
         Relationships: []
       }
+      match_history: {
+        Row: {
+          action: string
+          actor_id: string
+          created_at: string
+          id: string
+          metadata: Json | null
+          recommendation_id: string | null
+        }
+        Insert: {
+          action: string
+          actor_id: string
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          recommendation_id?: string | null
+        }
+        Update: {
+          action?: string
+          actor_id?: string
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          recommendation_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "match_history_recommendation_id_fkey"
+            columns: ["recommendation_id"]
+            isOneToOne: false
+            referencedRelation: "recommendations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       matches: {
         Row: {
           created_at: string
@@ -104,6 +139,39 @@ export type Database = {
           },
         ]
       }
+      notification_preferences: {
+        Row: {
+          created_at: string
+          id: string
+          match_updates_email: boolean
+          match_updates_push: boolean
+          new_matches_email: boolean
+          new_matches_push: boolean
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          match_updates_email?: boolean
+          match_updates_push?: boolean
+          new_matches_email?: boolean
+          new_matches_push?: boolean
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          match_updates_email?: boolean
+          match_updates_push?: boolean
+          new_matches_email?: boolean
+          new_matches_push?: boolean
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -127,6 +195,63 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      recommendations: {
+        Row: {
+          created_at: string
+          event_id: string | null
+          factors: Json
+          id: string
+          is_starred: boolean
+          is_viewed: boolean
+          match_score: number
+          reasoning: string
+          sponsor_id: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          event_id?: string | null
+          factors?: Json
+          id?: string
+          is_starred?: boolean
+          is_viewed?: boolean
+          match_score: number
+          reasoning: string
+          sponsor_id?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          event_id?: string | null
+          factors?: Json
+          id?: string
+          is_starred?: boolean
+          is_viewed?: boolean
+          match_score?: number
+          reasoning?: string
+          sponsor_id?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "recommendations_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "recommendations_sponsor_id_fkey"
+            columns: ["sponsor_id"]
+            isOneToOne: false
+            referencedRelation: "sponsors"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       sponsors: {
         Row: {

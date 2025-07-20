@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "@/components/ui/theme-toggle";
+
 import NotificationCenter from "@/components/notifications/NotificationCenter";
 import MessageCenter from "@/components/messaging/MessageCenter";
 import { Menu, X, Zap, LogOut } from "lucide-react";
@@ -47,7 +47,6 @@ const Navigation = () => {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-3">
-            <ThemeToggle />
             {user && (
               <>
                 <NotificationCenter />

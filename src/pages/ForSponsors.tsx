@@ -33,22 +33,22 @@ const ForSponsors = () => {
         {/* Features for Sponsors */}
         <section className="py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold text-center mb-12">Why Sponsors Choose SponsorSync</h2>
+            <h2 className="text-3xl font-bold text-center mb-12" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.3)' }}>Why Sponsors Choose SponsorSync</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <Card className="p-6 text-center hover:shadow-card transition-all duration-300">
+              <Card className="p-6 text-center neumorphic-hover neumorphic transition-all duration-300">
                 <Target className="h-12 w-12 text-primary mx-auto mb-4" />
-                <h3 className="text-xl font-semibold mb-2">Targeted Reach</h3>
-                <p className="text-muted-foreground">Connect with your exact demographic through student events</p>
+                <h3 className="text-xl font-semibold mb-2" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.2)' }}>Targeted Reach</h3>
+                <p className="text-muted-foreground" style={{ color: 'hsl(220, 14%, 85%)' }}>Connect with your exact demographic through student events</p>
               </Card>
-              <Card className="p-6 text-center hover:shadow-card transition-all duration-300">
+              <Card className="p-6 text-center neumorphic-hover neumorphic transition-all duration-300">
                 <TrendingUp className="h-12 w-12 text-primary mx-auto mb-4" />
-                <h3 className="text-xl font-semibold mb-2">Measurable ROI</h3>
-                <p className="text-muted-foreground">Track engagement and measure sponsorship performance</p>
+                <h3 className="text-xl font-semibold mb-2" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.2)' }}>Measurable ROI</h3>
+                <p className="text-muted-foreground" style={{ color: 'hsl(220, 14%, 85%)' }}>Track engagement and measure sponsorship performance</p>
               </Card>
-              <Card className="p-6 text-center hover:shadow-card transition-all duration-300">
+              <Card className="p-6 text-center neumorphic-hover neumorphic transition-all duration-300">
                 <BarChart3 className="h-12 w-12 text-primary mx-auto mb-4" />
-                <h3 className="text-xl font-semibold mb-2">Analytics Dashboard</h3>
-                <p className="text-muted-foreground">Real-time insights into campaign performance</p>
+                <h3 className="text-xl font-semibold mb-2" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.2)' }}>Analytics Dashboard</h3>
+                <p className="text-muted-foreground" style={{ color: 'hsl(220, 14%, 85%)' }}>Real-time insights into campaign performance</p>
               </Card>
             </div>
           </div>
