@@ -91,18 +91,21 @@ const FeaturesSection = () => {
           {features.map((feature, index) => (
             <Card 
               key={feature.title} 
-              className="p-8 border-2 hover:border-primary/20 transition-all duration-300 hover:shadow-card hover:scale-105 bg-gradient-card"
+              variant="neumorphic"
+              className="group hover:shadow-floating transition-all duration-500 animate-fade-in"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className={`w-16 h-16 rounded-xl bg-gradient-primary flex items-center justify-center mb-6 ${feature.color}`}>
-                <feature.icon className="h-8 w-8 text-primary-foreground" />
+              <div className="p-8">
+                <div className={`w-16 h-16 rounded-2xl bg-gradient-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-glow`}>
+                  <feature.icon className="h-8 w-8 text-primary-foreground" />
+                </div>
+                <h3 className="text-2xl font-display font-bold text-foreground mb-4 group-hover:text-primary transition-colors">
+                  {feature.title}
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  {feature.description}
+                </p>
               </div>
-              <h3 className="text-2xl font-bold text-foreground mb-4">
-                {feature.title}
-              </h3>
-              <p className="text-muted-foreground leading-relaxed">
-                {feature.description}
-              </p>
             </Card>
           ))}
         </div>
@@ -112,20 +115,23 @@ const FeaturesSection = () => {
           {benefits.map((benefit, index) => (
             <Card 
               key={benefit.title}
-              className="p-6 hover:shadow-card transition-all duration-300 hover:scale-105 border hover:border-primary/20"
+              variant="glass"
+              className="group hover:shadow-card transition-all duration-300 animate-fade-in"
               style={{ animationDelay: `${index * 0.05}s` }}
             >
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <benefit.icon className="h-6 w-6 text-primary" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-foreground mb-2">
-                    {benefit.title}
-                  </h4>
-                  <p className="text-sm text-muted-foreground">
-                    {benefit.description}
-                  </p>
+              <div className="p-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-accent/20 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                    <benefit.icon className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h4 className="font-display font-semibold text-foreground mb-2">
+                      {benefit.title}
+                    </h4>
+                    <p className="text-sm text-muted-foreground">
+                      {benefit.description}
+                    </p>
+                  </div>
                 </div>
               </div>
             </Card>
@@ -133,28 +139,28 @@ const FeaturesSection = () => {
         </div>
 
         {/* CTA Section */}
-        <div className="text-center bg-gradient-hero rounded-2xl p-12 shadow-hero">
-          <h3 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
+        <Card variant="gradient" className="text-center p-12 shadow-hero animate-fade-in">
+          <h3 className="text-3xl md:text-4xl font-display font-bold gradient-text mb-4">
             Ready to Transform Your Sponsorship Game?
           </h3>
-          <p className="text-xl text-primary-foreground/80 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
             Join thousands of organizations and sponsors who've found their perfect match.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="accent" size="xl" className="group" asChild>
+            <Button variant="premium" size="xl" className="group" asChild>
               <Link to="/for-students">
                 Start For Students
                 <Users className="ml-2 h-5 w-5 group-hover:scale-110 transition-transform" />
               </Link>
             </Button>
-            <Button variant="professional" size="xl" className="group" asChild>
+            <Button variant="glass" size="xl" className="group" asChild>
               <Link to="/for-sponsors">
                 Start For Sponsors
                 <Target className="ml-2 h-5 w-5 group-hover:scale-110 transition-transform" />
               </Link>
             </Button>
           </div>
-        </div>
+        </Card>
       </div>
     </section>
   );
