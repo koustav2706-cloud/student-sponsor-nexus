@@ -36,6 +36,21 @@ const HeroSection = () => {
             Build meaningful partnerships that drive events and grow brands.
           </p>
 
+          {/* Spline Animation */}
+          <div className="mb-12 mx-auto max-w-2xl animate-fade-in" style={{ animationDelay: '0.3s' }}>
+            <div className="relative rounded-3xl overflow-hidden border border-primary/20 h-80 bg-background/10 backdrop-blur-sm">
+              <div 
+                dangerouslySetInnerHTML={{
+                  __html: `
+                    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.33/build/spline-viewer.js"></script>
+                    <spline-viewer loading-anim-type="none" url="https://prod.spline.design/m5prql-j6-q9cRZ3/scene.splinecode" style="width: 100%; height: 100%;"></spline-viewer>
+                  `
+                }}
+                style={{ width: '100%', height: '100%' }}
+              />
+            </div>
+          </div>
+
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16 animate-slide-up" style={{ animationDelay: '0.4s' }}>
             <Button variant="accent" size="xl" className="group" asChild>

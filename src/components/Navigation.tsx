@@ -55,20 +55,11 @@ const Navigation = () => {
               </>
             )}
             {user ? (
-              <>
-                <Button variant="ghost" size="sm" asChild>
-                  <Link to="/dashboard">Dashboard</Link>
-                </Button>
-                <Button variant="ghost" size="sm" onClick={signOut} className="gap-2">
-                  <LogOut className="h-4 w-4" />
-                  Sign Out
-                </Button>
-              </>
-            ) : (
-              <Button variant="hero" size="sm" asChild>
-                <Link to="/auth">Get Started</Link>
+              <Button variant="ghost" size="sm" onClick={signOut} className="gap-2">
+                <LogOut className="h-4 w-4" />
+                Sign Out
               </Button>
-            )}
+            ) : null}
           </div>
 
           {/* Mobile menu button */}
@@ -107,19 +98,10 @@ const Navigation = () => {
               </Link>
               <div className="flex gap-2 px-3 py-2">
                 {user ? (
-                  <>
-                    <Button variant="ghost" size="sm" className="flex-1" asChild>
-                      <Link to="/dashboard" onClick={() => setIsOpen(false)}>Dashboard</Link>
-                    </Button>
-                    <Button variant="outline" size="sm" className="flex-1" onClick={() => {signOut(); setIsOpen(false);}}>
-                      Sign Out
-                    </Button>
-                  </>
-                ) : (
-                  <Button variant="hero" size="sm" className="w-full" asChild>
-                    <Link to="/auth" onClick={() => setIsOpen(false)}>Get Started</Link>
+                  <Button variant="outline" size="sm" className="w-full" onClick={() => {signOut(); setIsOpen(false);}}>
+                    Sign Out
                   </Button>
-                )}
+                ) : null}
               </div>
             </div>
           </div>
