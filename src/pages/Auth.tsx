@@ -82,44 +82,42 @@ const Auth = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
       <main className="pt-16 flex items-center justify-center py-20">
-        <Card className="w-full max-w-lg p-10 shadow-floating neumorphic border-2 border-border/30">
+        <Card className="w-full max-w-md p-8 shadow-card">
           <div className="text-center mb-6">
-            <h1 className="text-3xl font-bold text-foreground mb-4 text-overlay">
+            <h1 className="text-2xl font-bold text-foreground mb-2">
               Welcome to SponsorSync
             </h1>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-muted-foreground">
               Connect students and sponsors through smart matchmaking
             </p>
           </div>
 
           <Tabs defaultValue="signin" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 h-12">
+            <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="signin">Sign In</TabsTrigger>
               <TabsTrigger value="signup">Sign Up</TabsTrigger>
             </TabsList>
 
             <TabsContent value="signin">
-              <form onSubmit={handleSignIn} className="space-y-6">
+              <form onSubmit={handleSignIn} className="space-y-4">
                 <div>
-                  <Label htmlFor="signin-email" className="text-base font-medium">Email</Label>
+                  <Label htmlFor="signin-email">Email</Label>
                   <Input
                     id="signin-email"
                     name="email"
                     type="email"
                     placeholder="Enter your email"
-                    className="h-12 text-base mt-2"
                     required
                     disabled={isLoading}
                   />
                 </div>
                 <div>
-                  <Label htmlFor="signin-password" className="text-base font-medium">Password</Label>
+                  <Label htmlFor="signin-password">Password</Label>
                   <Input
                     id="signin-password"
                     name="password"
                     type="password"
                     placeholder="Enter your password"
-                    className="h-12 text-base mt-2"
                     required
                     disabled={isLoading}
                   />
@@ -134,7 +132,7 @@ const Auth = () => {
 
                 <Button 
                   type="submit" 
-                  className="w-full h-12 text-base" 
+                  className="w-full" 
                   variant="hero"
                   disabled={isLoading}
                 >
@@ -144,75 +142,71 @@ const Auth = () => {
             </TabsContent>
 
             <TabsContent value="signup">
-              <form onSubmit={handleSignUp} className="space-y-6">
+              <form onSubmit={handleSignUp} className="space-y-4">
                 <div>
-                  <Label htmlFor="signup-name" className="text-base font-medium">Full Name</Label>
+                  <Label htmlFor="signup-name">Full Name</Label>
                   <Input
                     id="signup-name"
                     name="fullName"
                     type="text"
                     placeholder="Enter your full name"
-                    className="h-12 text-base mt-2"
                     required
                     disabled={isLoading}
                   />
                 </div>
                 <div>
-                  <Label htmlFor="signup-email" className="text-base font-medium">Email</Label>
+                  <Label htmlFor="signup-email">Email</Label>
                   <Input
                     id="signup-email"
                     name="email"
                     type="email"
                     placeholder="Enter your email"
-                    className="h-12 text-base mt-2"
                     required
                     disabled={isLoading}
                   />
                 </div>
                 <div>
-                  <Label htmlFor="signup-password" className="text-base font-medium">Password</Label>
+                  <Label htmlFor="signup-password">Password</Label>
                   <Input
                     id="signup-password"
                     name="password"
                     type="password"
                     placeholder="Create a password"
-                    className="h-12 text-base mt-2"
                     required
                     disabled={isLoading}
                   />
                 </div>
                 <div>
-                  <Label htmlFor="signup-confirm" className="text-base font-medium">Confirm Password</Label>
+                  <Label htmlFor="signup-confirm">Confirm Password</Label>
                   <Input
                     id="signup-confirm"
                     name="confirmPassword"
                     type="password"
                     placeholder="Confirm your password"
-                    className="h-12 text-base mt-2"
                     required
                     disabled={isLoading}
                   />
                 </div>
 
                 <div>
-                  <Label className="text-lg font-semibold">I am a:</Label>
+                  <Label className="text-base font-medium">I am a:</Label>
                   <RadioGroup name="role" className="mt-2">
-                    <div className="flex items-center space-x-3 p-4 border-2 rounded-xl hover:bg-accent/20 hover:border-primary/30 transition-all duration-300">
+                    <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-accent/50 transition-colors">
                       <RadioGroupItem value="student" id="student" />
-                      <User className="h-5 w-5 text-primary" />
+                      <User className="h-4 w-4 text-primary" />
                       <label htmlFor="student" className="flex-1 cursor-pointer">
-                        <div className="font-semibold text-base">Student Organizer</div>
-                        <div className="text-base text-muted-foreground">
+                        <div className="font-medium">Student Organizer</div>
+                        <div className="text-sm text-muted-foreground">
                           Looking for sponsors for events
                         </div>
                       </label>
                     </div>
-                    <div className="flex items-center space-x-3 p-4 border-2 rounded-xl hover:bg-accent/20 hover:border-primary/30 transition-all duration-300">
+                    <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-accent/50 transition-colors">
                       <RadioGroupItem value="sponsor" id="sponsor" />
-                      <Building2 className="h-5 w-5 text-primary" />
+                      <Building2 className="h-4 w-4 text-primary" />
                       <label htmlFor="sponsor" className="flex-1 cursor-pointer">
-                        <div className="font-semibold text-base">Sponsor</div>
-                        <div className="text-base text-muted-foreground">
+                        <div className="font-medium">Sponsor</div>
+                        <div className="text-sm text-muted-foreground">
                           Looking to sponsor student events
                         </div>
                       </label>
@@ -229,7 +223,7 @@ const Auth = () => {
 
                 <Button 
                   type="submit" 
-                  className="w-full h-12 text-base" 
+                  className="w-full" 
                   variant="hero"
                   disabled={isLoading}
                 >

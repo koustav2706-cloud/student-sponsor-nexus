@@ -73,65 +73,59 @@ const FeaturesSection = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-6xl font-bold text-overlay mb-8">
+          <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-6">
             Why Choose{" "}
             <span className="bg-gradient-primary bg-clip-text text-transparent">
               SponsorSync
             </span>
             ?
           </h2>
-          <p className="text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             The most advanced sponsorship platform designed for the modern digital age. 
             Powered by AI, trusted by thousands.
           </p>
         </div>
 
         {/* Main Features */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-24">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
           {features.map((feature, index) => (
             <Card 
               key={feature.title} 
-              variant="neumorphic"
-              className="group hover-lift neumorphic transition-all duration-500 animate-fade-in"
+              className="p-8 border-2 hover:border-primary/20 transition-all duration-300 hover:shadow-card hover:scale-105 bg-gradient-card"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className="p-10">
-                <div className={`w-20 h-20 rounded-3xl bg-gradient-primary flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300 shadow-glow`}>
-                  <feature.icon className="h-10 w-10 text-primary-foreground" />
-                </div>
-                <h3 className="text-3xl font-display font-bold text-overlay mb-6 group-hover:text-primary transition-colors">
-                  {feature.title}
-                </h3>
-                <p className="text-lg text-muted-foreground leading-relaxed">
-                  {feature.description}
-                </p>
+              <div className={`w-16 h-16 rounded-xl bg-gradient-primary flex items-center justify-center mb-6 ${feature.color}`}>
+                <feature.icon className="h-8 w-8 text-primary-foreground" />
               </div>
+              <h3 className="text-2xl font-bold text-foreground mb-4">
+                {feature.title}
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                {feature.description}
+              </p>
             </Card>
           ))}
         </div>
 
         {/* Benefits Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
           {benefits.map((benefit, index) => (
             <Card 
               key={benefit.title}
-              variant="glass"
-              className="group hover-lift transition-all duration-300 animate-fade-in"
+              className="p-6 hover:shadow-card transition-all duration-300 hover:scale-105 border hover:border-primary/20"
               style={{ animationDelay: `${index * 0.05}s` }}
             >
-              <div className="p-8">
-                <div className="flex items-start gap-4">
-                  <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                    <benefit.icon className="h-7 w-7 text-primary" />
-                  </div>
-                  <div>
-                    <h4 className="text-xl font-display font-semibold text-overlay mb-3">
-                      {benefit.title}
-                    </h4>
-                    <p className="text-base text-muted-foreground leading-relaxed">
-                      {benefit.description}
-                    </p>
-                  </div>
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <benefit.icon className="h-6 w-6 text-primary" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-foreground mb-2">
+                    {benefit.title}
+                  </h4>
+                  <p className="text-sm text-muted-foreground">
+                    {benefit.description}
+                  </p>
                 </div>
               </div>
             </Card>
@@ -139,28 +133,28 @@ const FeaturesSection = () => {
         </div>
 
         {/* CTA Section */}
-        <Card variant="gradient" className="text-center p-16 shadow-hero animate-fade-in">
-          <h3 className="text-4xl md:text-5xl font-display font-bold gradient-text mb-6">
+        <div className="text-center bg-gradient-hero rounded-2xl p-12 shadow-hero">
+          <h3 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
             Ready to Transform Your Sponsorship Game?
           </h3>
-          <p className="text-2xl text-muted-foreground mb-10 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-primary-foreground/80 mb-8 max-w-2xl mx-auto">
             Join thousands of organizations and sponsors who've found their perfect match.
           </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Button variant="premium" size="xxl" className="group" asChild>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button variant="accent" size="xl" className="group" asChild>
               <Link to="/for-students">
                 Start For Students
-                <Users className="ml-3 h-6 w-6 group-hover:scale-110 transition-transform" />
+                <Users className="ml-2 h-5 w-5 group-hover:scale-110 transition-transform" />
               </Link>
             </Button>
-            <Button variant="glass" size="xxl" className="group" asChild>
+            <Button variant="professional" size="xl" className="group" asChild>
               <Link to="/for-sponsors">
                 Start For Sponsors
-                <Target className="ml-3 h-6 w-6 group-hover:scale-110 transition-transform" />
+                <Target className="ml-2 h-5 w-5 group-hover:scale-110 transition-transform" />
               </Link>
             </Button>
           </div>
-        </Card>
+        </div>
       </div>
     </section>
   );

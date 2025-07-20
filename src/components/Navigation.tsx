@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-
-import { NotificationSystem } from "@/components/ui/notification-system";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
+import NotificationCenter from "@/components/notifications/NotificationCenter";
 import MessageCenter from "@/components/messaging/MessageCenter";
 import { Menu, X, Zap, LogOut } from "lucide-react";
 
@@ -47,18 +47,28 @@ const Navigation = () => {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-3">
+            <ThemeToggle />
             {user && (
               <>
-                <NotificationSystem />
+                <NotificationCenter />
                 <MessageCenter />
               </>
             )}
             {user ? (
-              <Button variant="ghost" size="sm" onClick={signOut} className="gap-2">
-                <LogOut className="h-4 w-4" />
-                Sign Out
+              <>
+                <Button variant="ghost" size="sm" asChild>
+                  <Link to="/dashboard">Dashboard</Link>
+                </Button>
+                <Button variant="ghost" size="sm" onClick={signOut} className="gap-2">
+                  <LogOut className="h-4 w-4" />
+                  Sign Out
+                </Button>
+              </>
+            ) : (
+              <Button variant="hero" size="sm" asChild>
+                <Link to="/auth">Get Started</Link>
               </Button>
-            ) : null}
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -97,10 +107,19 @@ const Navigation = () => {
               </Link>
               <div className="flex gap-2 px-3 py-2">
                 {user ? (
-                  <Button variant="outline" size="sm" className="w-full" onClick={() => {signOut(); setIsOpen(false);}}>
-                    Sign Out
+                  <>
+                    <Button variant="ghost" size="sm" className="flex-1" asChild>
+                      <Link to="/dashboard" onClick={() => setIsOpen(false)}>Dashboard</Link>
+                    </Button>
+                    <Button variant="outline" size="sm" className="flex-1" onClick={() => {signOut(); setIsOpen(false);}}>
+                      Sign Out
+                    </Button>
+                  </>
+                ) : (
+                  <Button variant="hero" size="sm" className="w-full" asChild>
+                    <Link to="/auth" onClick={() => setIsOpen(false)}>Get Started</Link>
                   </Button>
-                ) : null}
+                )}
               </div>
             </div>
           </div>
