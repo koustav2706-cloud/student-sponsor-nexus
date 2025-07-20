@@ -22,7 +22,7 @@ const HeroSection = () => {
           </div>
 
           {/* Main Headline */}
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-primary-foreground mb-6 animate-slide-up">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-primary-foreground mb-6 animate-slide-up relative z-20">
             Smart Sponsorship &{" "}
             <span className="bg-gradient-to-r from-accent to-accent-light bg-clip-text text-transparent">
               Brand Matchmaking
@@ -31,7 +31,7 @@ const HeroSection = () => {
           </h1>
 
           {/* Subheadline */}
-          <p className="text-xl md:text-2xl text-primary-foreground/80 max-w-4xl mx-auto mb-10 leading-relaxed animate-slide-up" style={{ animationDelay: '0.2s' }}>
+          <p className="text-xl md:text-2xl text-primary-foreground/80 max-w-4xl mx-auto mb-10 leading-relaxed animate-slide-up relative z-20" style={{ animationDelay: '0.2s' }}>
             Connect student organizations with perfect sponsors through AI-powered matching. 
             Build meaningful partnerships that drive events and grow brands.
           </p>
