@@ -5,7 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider } from "@/hooks/useAuth";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import SplineBackground from "@/components/SplineBackground";
+import { RecommendationsDashboard } from "@/components/matchmaking/RecommendationsDashboard";
 import Index from "./pages/Index";
 import ForStudents from "./pages/ForStudents";
 import ForSponsors from "./pages/ForSponsors";
@@ -19,7 +19,6 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
         <TooltipProvider>
-          <SplineBackground />
           <Toaster />
           <Sonner />
           <BrowserRouter>
@@ -28,6 +27,7 @@ const App = () => (
               <Route path="/for-students" element={<ForStudents />} />
               <Route path="/for-sponsors" element={<ForSponsors />} />
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/ai-recommendations" element={<RecommendationsDashboard />} />
               <Route path="/auth" element={<Auth />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />

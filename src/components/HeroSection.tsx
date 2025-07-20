@@ -34,18 +34,25 @@ const HeroSection = () => {
           </div>
 
           {/* Main Headline */}
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold text-primary-foreground mb-8 relative z-30 opacity-100 animate-fade-in delay-100" style={{ textShadow: '0 4px 8px rgba(0,0,0,0.3)' }}>
-            Smart Sponsorship &{" "}
-            <span className="gradient-text">
-              Brand Matchmaking
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold mb-8 relative z-30 animate-fade-in delay-100" 
+              style={{ 
+                color: 'hsl(220, 14%, 98%)', 
+                textShadow: '0 4px 12px rgba(0,0,0,0.9), 0 2px 6px rgba(0,0,0,0.7)' 
+              }}>
+            Connect Students &{" "}
+            <span className="bg-gradient-to-r from-accent to-accent-light bg-clip-text text-transparent">
+              Sponsors
             </span>{" "}
-            Engine
+            with AI
           </h1>
 
-          {/* Subheadline */}
-          <p className="text-xl md:text-2xl lg:text-3xl text-primary-foreground/90 max-w-5xl mx-auto mb-12 leading-relaxed relative z-30 opacity-100 animate-fade-in delay-200 font-sans" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.3)' }}>
-            Connect student organizations with perfect sponsors through AI-powered matching. 
-            Build meaningful partnerships that drive events and grow brands.
+          <p className="text-xl md:text-2xl lg:text-3xl max-w-5xl mx-auto mb-12 leading-relaxed relative z-30 animate-fade-in delay-200 font-sans" 
+             style={{ 
+               color: 'hsl(220, 14%, 90%)', 
+               textShadow: '0 2px 6px rgba(0,0,0,0.8)' 
+             }}>
+            Revolutionary AI-powered platform that intelligently matches student events 
+            with perfect sponsors based on audience, budget, and brand alignment.
           </p>
 
           {/* Enhanced Spline Animation Container */}

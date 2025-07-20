@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 import NotificationCenter from "@/components/notifications/NotificationCenter";
 import MessageCenter from "@/components/messaging/MessageCenter";
-import { Menu, X, Zap, LogOut } from "lucide-react";
+import { Menu, X, Zap, LogOut, Sparkles } from "lucide-react";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,6 +43,15 @@ const Navigation = () => {
             >
               For Sponsors
             </Link>
+            {user && (
+              <Link 
+                to="/ai-recommendations" 
+                className="text-foreground hover:text-primary transition-colors font-medium flex items-center gap-1"
+              >
+                <Sparkles className="h-4 w-4" />
+                AI Matches
+              </Link>
+            )}
           </div>
 
           {/* Desktop CTA */}
@@ -95,6 +104,16 @@ const Navigation = () => {
               >
                 For Sponsors
               </Link>
+              {user && (
+                <Link
+                  to="/ai-recommendations"
+                  className="block px-3 py-2 text-foreground hover:text-primary transition-colors font-medium"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <Sparkles className="inline h-4 w-4 mr-1" />
+                  AI Matches
+                </Link>
+              )}
               <div className="flex gap-2 px-3 py-2">
                 {user ? (
                   <Button variant="outline" size="sm" className="w-full" onClick={() => {signOut(); setIsOpen(false);}}>

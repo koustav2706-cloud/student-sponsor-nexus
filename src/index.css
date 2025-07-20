@@ -80,48 +80,48 @@ All colors MUST be HSL for consistency across light/dark modes.
   }
 
   .dark {
-    --background: 220 27% 8%;
-    --foreground: 220 14% 96%;
+    --background: 220 27% 4%;
+    --foreground: 220 14% 98%;
 
     --card: 220 27% 8%;
-    --card-foreground: 220 14% 96%;
+    --card-foreground: 220 14% 98%;
 
     --popover: 220 27% 8%;
-    --popover-foreground: 220 14% 96%;
+    --popover-foreground: 220 14% 98%;
 
-    --primary: 240 100% 76%;
-    --primary-foreground: 220 27% 8%;
+    --primary: 240 100% 80%;
+    --primary-foreground: 220 27% 4%;
 
-    --secondary: 220 17% 17%;
-    --secondary-foreground: 220 14% 96%;
+    --secondary: 220 17% 20%;
+    --secondary-foreground: 220 14% 98%;
 
-    --muted: 220 17% 17%;
-    --muted-foreground: 220 9% 65%;
+    --muted: 220 17% 20%;
+    --muted-foreground: 220 9% 75%;
 
-    --accent: 295 100% 82%;
-    --accent-foreground: 220 27% 8%;
+    --accent: 295 100% 85%;
+    --accent-foreground: 220 27% 4%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 220 14% 96%;
+    --destructive-foreground: 220 14% 98%;
 
-    --border: 220 17% 17%;
-    --input: 220 17% 17%;
-    --ring: 240 100% 76%;
+    --border: 220 17% 25%;
+    --input: 220 17% 25%;
+    --ring: 240 100% 80%;
 
-    --gradient-primary: linear-gradient(135deg, hsl(240, 100%, 76%), hsl(295, 100%, 82%), hsl(45, 93%, 70%));
-    --gradient-hero: linear-gradient(135deg, hsl(240, 100%, 76%) 0%, hsl(295, 100%, 82%) 50%, hsl(195, 100%, 70%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(220, 27%, 8%) 0%, hsl(220, 17%, 17%) 100%);
-    --shadow-neumorphic-light: 6px 6px 12px hsl(220, 27%, 4%), -6px -6px 12px hsl(220, 17%, 17%);
-    --shadow-neumorphic-inset: inset 3px 3px 6px hsl(220, 27%, 4%), inset -3px -3px 6px hsl(220, 17%, 17%);
+    --gradient-primary: linear-gradient(135deg, hsl(240, 100%, 80%), hsl(295, 100%, 85%), hsl(45, 93%, 75%));
+    --gradient-hero: linear-gradient(135deg, hsl(240, 100%, 80%) 0%, hsl(295, 100%, 85%) 50%, hsl(195, 100%, 75%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(220, 27%, 8%) 0%, hsl(220, 17%, 20%) 100%);
+    --shadow-neumorphic-light: 6px 6px 12px hsl(220, 27%, 2%), -6px -6px 12px hsl(220, 17%, 20%);
+    --shadow-neumorphic-inset: inset 3px 3px 6px hsl(220, 27%, 2%), inset -3px -3px 6px hsl(220, 17%, 20%);
 
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 240 100% 76%;
+    --sidebar-primary: 240 100% 80%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 240 3.7% 15.9%;
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 240 100% 76%;
+    --sidebar-ring: 240 100% 80%;
   }
 }
 
@@ -145,9 +145,10 @@ All colors MUST be HSL for consistency across light/dark modes.
     color-scheme: dark;
   }
 
-  /* Enhanced text visibility */
+  /* Enhanced text visibility with stronger contrasts */
   h1, h2, h3, h4, h5, h6 {
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    color: hsl(220, 14%, 98%) !important;
   }
 
   /* Improved contrast for all text */
@@ -155,15 +156,27 @@ All colors MUST be HSL for consistency across light/dark modes.
     color: hsl(220, 14%, 85%) !important;
   }
 
+  .text-foreground {
+    color: hsl(220, 14%, 98%) !important;
+  }
+
   /* Better visibility for cards and backgrounds */
   .bg-card {
-    background: linear-gradient(145deg, hsl(220, 27%, 12%), hsl(220, 17%, 20%)) !important;
-    border: 1px solid hsl(220, 17%, 25%) !important;
+    background: linear-gradient(145deg, hsl(220, 27%, 12%), hsl(220, 17%, 24%)) !important;
+    border: 1px solid hsl(220, 17%, 30%) !important;
   }
 
   /* Enhanced image visibility */
   img {
-    filter: brightness(1.1) contrast(1.1);
+    filter: brightness(1.3) contrast(1.2) saturate(1.1);
+  }
+
+  /* Stronger button contrast */
+  .btn-hero {
+    background: var(--gradient-primary) !important;
+    color: hsl(220, 27%, 4%) !important;
+    font-weight: 600 !important;
+    text-shadow: none !important;
   }
 
   /* Enhanced scrollbar */
