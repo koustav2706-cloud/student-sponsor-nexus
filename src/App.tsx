@@ -11,8 +11,6 @@ import Dashboard from "./pages/Dashboard";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 import ChatRoom from "./pages/ChatRoom";
-import DemoSponsors from "./pages/DemoSponsors";
-import DemoEvents from "./pages/DemoEvents";
 
 const queryClient = new QueryClient();
 
@@ -31,8 +29,6 @@ const App = () => (
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/chat/:roomId" element={<ChatRoom />} />
-              <Route path="/demo-sponsors" element={<DemoSponsors />} />
-              <Route path="/demo-events" element={<DemoEvents />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

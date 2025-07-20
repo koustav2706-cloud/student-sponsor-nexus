@@ -44,18 +44,6 @@ const Navigation = () => {
             >
               For Sponsors
             </Link>
-            <Link 
-              to="/demo-sponsors" 
-              className="text-foreground hover:text-accent transition-colors font-medium"
-            >
-              Demo Sponsors
-            </Link>
-            <Link 
-              to="/demo-events" 
-              className="text-foreground hover:text-success transition-colors font-medium"
-            >
-              Demo Events
-            </Link>
           </div>
 
           {/* Desktop CTA */}
@@ -116,20 +104,6 @@ const Navigation = () => {
                 onClick={() => setIsOpen(false)}
               >
                 For Sponsors
-              </Link>
-              <Link
-                to="/demo-sponsors"
-                className="block px-3 py-2 text-foreground hover:text-accent transition-colors font-medium"
-                onClick={() => setIsOpen(false)}
-              >
-                Demo Sponsors
-              </Link>
-              <Link
-                to="/demo-events"
-                className="block px-3 py-2 text-foreground hover:text-success transition-colors font-medium"
-                onClick={() => setIsOpen(false)}
-              >
-                Demo Events
               </Link>
               <div className="flex gap-2 px-3 py-2">
                 {user ? (
