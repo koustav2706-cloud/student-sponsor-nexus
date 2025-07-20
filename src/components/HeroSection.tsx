@@ -34,7 +34,7 @@ const HeroSection = () => {
           </div>
 
           {/* Main Headline */}
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold text-primary-foreground mb-8 relative z-30 opacity-100 animate-fade-in delay-100" style={{ textShadow: '0 4px 8px rgba(0,0,0,0.3)' }}>
+          <h1 className="text-6xl md:text-8xl lg:text-9xl font-display font-bold text-overlay mb-10 relative z-30 animate-fade-in delay-100">
             Smart Sponsorship &{" "}
             <span className="gradient-text">
               Brand Matchmaking
@@ -43,7 +43,7 @@ const HeroSection = () => {
           </h1>
 
           {/* Subheadline */}
-          <p className="text-xl md:text-2xl lg:text-3xl text-primary-foreground/90 max-w-5xl mx-auto mb-12 leading-relaxed relative z-30 opacity-100 animate-fade-in delay-200 font-sans" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.3)' }}>
+          <p className="text-2xl md:text-3xl lg:text-4xl text-overlay max-w-6xl mx-auto mb-16 leading-relaxed relative z-30 animate-fade-in delay-200 font-sans">
             Connect student organizations with perfect sponsors through AI-powered matching. 
             Build meaningful partnerships that drive events and grow brands.
           </p>
@@ -65,41 +65,41 @@ const HeroSection = () => {
           </div>
 
           {/* Enhanced CTAs */}
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-20 animate-fade-in delay-400">
+          <div className="flex flex-col sm:flex-row gap-8 justify-center items-center mb-24 animate-fade-in delay-400">
             <Button variant="premium" size="xxl" className="group" asChild>
               <Link to="/for-students">
-                <Users className="mr-3 h-6 w-6 group-hover:scale-110 transition-transform" />
+                <Users className="mr-4 h-7 w-7 group-hover:scale-110 transition-transform" />
                 Find Sponsors
-                <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="ml-4 h-7 w-7 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
             <Button variant="glass" size="xxl" className="group" asChild>
               <Link to="/for-sponsors">
-                <Target className="mr-3 h-6 w-6 group-hover:scale-110 transition-transform" />
+                <Target className="mr-4 h-7 w-7 group-hover:scale-110 transition-transform" />
                 Discover Events
-                <TrendingUp className="ml-3 h-6 w-6 group-hover:scale-110 transition-transform" />
+                <TrendingUp className="ml-4 h-7 w-7 group-hover:scale-110 transition-transform" />
               </Link>
             </Button>
           </div>
 
           {/* Enhanced Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto animate-fade-in delay-500">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-7xl mx-auto animate-fade-in delay-500">
             <Card variant="neumorphic" className="group">
-              <div className="p-8 text-center">
-                <div className="text-4xl lg:text-5xl font-display font-bold text-primary mb-3 group-hover:scale-110 transition-transform duration-300">500+</div>
-                <div className="text-lg text-muted-foreground font-medium">Student Organizations</div>
+              <div className="p-10 text-center">
+                <div className="text-5xl lg:text-6xl font-display font-bold text-primary mb-4 group-hover:scale-110 transition-transform duration-300">500+</div>
+                <div className="text-xl text-muted-foreground font-medium">Student Organizations</div>
               </div>
             </Card>
             <Card variant="neumorphic" className="group md:-translate-y-4">
-              <div className="p-8 text-center">
-                <div className="text-4xl lg:text-5xl font-display font-bold text-accent mb-3 group-hover:scale-110 transition-transform duration-300">1,200+</div>
-                <div className="text-lg text-muted-foreground font-medium">Active Sponsors</div>
+              <div className="p-10 text-center">
+                <div className="text-5xl lg:text-6xl font-display font-bold text-accent mb-4 group-hover:scale-110 transition-transform duration-300">1,200+</div>
+                <div className="text-xl text-muted-foreground font-medium">Active Sponsors</div>
               </div>
             </Card>
             <Card variant="neumorphic" className="group">
-              <div className="p-8 text-center">
-                <div className="text-4xl lg:text-5xl font-display font-bold gradient-text mb-3 group-hover:scale-110 transition-transform duration-300">$2M+</div>
-                <div className="text-lg text-muted-foreground font-medium">Sponsorships Matched</div>
+              <div className="p-10 text-center">
+                <div className="text-5xl lg:text-6xl font-display font-bold gradient-text mb-4 group-hover:scale-110 transition-transform duration-300">$2M+</div>
+                <div className="text-xl text-muted-foreground font-medium">Sponsorships Matched</div>
               </div>
             </Card>
           </div>

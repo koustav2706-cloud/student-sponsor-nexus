@@ -7,13 +7,37 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// Rate limiting storage
+const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
+const RATE_LIMIT_MAX = 100; // 100 requests per day
+const RATE_LIMIT_WINDOW = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+
+function checkRateLimit(userId: string): boolean {
+  const now = Date.now();
+  const userLimit = rateLimitMap.get(userId);
+  
+  if (!userLimit || now > userLimit.resetTime) {
+    // Reset or create new limit
+    rateLimitMap.set(userId, { count: 1, resetTime: now + RATE_LIMIT_WINDOW });
+    return true;
+  }
+  
+  if (userLimit.count >= RATE_LIMIT_MAX) {
+    return false;
+  }
+  
+  userLimit.count++;
+  return true;
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { eventId, sponsorId, action } = await req.json();
+    const requestBody = await req.json();
+    const { eventId, sponsorId, action } = requestBody;
     
     // Initialize Supabase client
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -22,6 +46,10 @@ serve(async (req) => {
 
     // Get auth user
     const authHeader = req.headers.get('Authorization')!;
+    if (!authHeader) {
+      throw new Error('Authorization header required');
+    }
+    
     const token = authHeader.replace('Bearer ', '');
     const { data: { user } } = await supabase.auth.getUser(token);
     
@@ -29,13 +57,26 @@ serve(async (req) => {
       throw new Error('Unauthorized');
     }
 
+    // Check rate limit
+    if (!checkRateLimit(user.id)) {
+      return new Response(JSON.stringify({ 
+        error: 'Rate limit exceeded. Maximum 100 requests per day.' 
+      }), {
+        status: 429,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    // Log request for monitoring
+    console.log(`AI Matchmaking Request: ${action} by user ${user.id} at ${new Date().toISOString()}`);
+
     switch (action) {
       case 'generateRecommendations':
         return await generateRecommendations(supabase, user.id);
       case 'getSingleMatch':
         return await getSingleMatch(supabase, eventId, sponsorId);
       case 'updateMatchStatus':
-        return await updateMatchStatus(supabase, eventId, sponsorId, await req.json());
+        return await updateMatchStatus(supabase, eventId, sponsorId, requestBody);
       default:
         throw new Error('Invalid action');
     }
@@ -221,7 +262,7 @@ async function generateEventRecommendations(supabase: any, userId: string) {
 async function calculateMatchScore(event: any, sponsor: any) {
   console.log('Calculating match score for event:', event.id, 'and sponsor:', sponsor.id);
   
-  const GEMINI_API_KEY = Deno.env.get('GEMINI_API_KEY');
+  const GEMINI_API_KEY = 'AIzaSyAlA3unQELAAW5jeahTPKlu8xCiSLFTFmM';
   
   if (!GEMINI_API_KEY) {
     // Fallback scoring algorithm when API key is not available
@@ -229,8 +270,10 @@ async function calculateMatchScore(event: any, sponsor: any) {
   }
 
   try {
+    // Enhanced prompt for better AI matching
     const prompt = `
-    You are an AI matchmaking expert for student events and sponsors. Calculate a match score and provide reasoning.
+    You are an advanced AI matchmaking expert specializing in student event sponsorships. 
+    Analyze the compatibility between this event and sponsor using sophisticated matching criteria.
 
     Event Details:
     - Title: ${event.title}
@@ -240,6 +283,7 @@ async function calculateMatchScore(event: any, sponsor: any) {
     - Budget Range: ${event.budget_range || 'Not specified'}
     - Audience Size: ${event.audience_size || 'Not specified'}
     - Date: ${event.event_date || 'Not specified'}
+    - Engagement Metrics: ${JSON.stringify(event.engagement_metrics || {})}
 
     Sponsor Details:
     - Company: ${sponsor.company_name}
@@ -248,24 +292,33 @@ async function calculateMatchScore(event: any, sponsor: any) {
     - Marketing Goals: ${sponsor.marketing_goals || 'Not specified'}
     - Target Demographics: ${JSON.stringify(sponsor.target_demographics || [])}
 
-    Provide a JSON response with:
-    1. A match score (0-100) based on compatibility
-    2. Detailed reasoning explaining the score
-    3. Key matching factors
+    MATCHING CRITERIA (weights):
+    1. Event theme/category compatibility (25%)
+    2. Audience demographics alignment (20%) 
+    3. Budget range compatibility (20%)
+    4. Geographic proximity (15%)
+    5. Industry preferences (10%)
+    6. Marketing goals alignment (10%)
 
-    Consider: industry alignment, budget compatibility, audience fit, location proximity, event type relevance, and marketing goal alignment.
+    Provide a JSON response with:
+    1. A precise match score (0-100) based on weighted criteria
+    2. Detailed reasoning explaining why this is/isn't a good match
+    3. Specific matching factors with individual scores
+    4. Actionable insights for both parties
 
     Response format:
     {
-      "score": 85,
-      "reasoning": "High compatibility due to...",
+      "score": 87,
+      "reasoning": "Excellent match due to strong alignment in target demographics and budget compatibility. The tech industry focus aligns perfectly with the AI workshop theme, and the sponsor's marketing goals of reaching young professionals match the event's audience profile.",
       "factors": {
-        "industry_alignment": 90,
-        "budget_compatibility": 80,
-        "audience_fit": 85,
-        "location_proximity": 70,
-        "marketing_alignment": 95
-      }
+        "theme_compatibility": 92,
+        "audience_alignment": 88,
+        "budget_compatibility": 85,
+        "geographic_proximity": 75,
+        "industry_preferences": 90,
+        "marketing_alignment": 87
+      },
+      "insights": "This partnership could provide significant brand exposure to tech-savvy students while supporting innovative education initiatives."
     }
     `;
 
@@ -281,10 +334,10 @@ async function calculateMatchScore(event: any, sponsor: any) {
           }]
         }],
         generationConfig: {
-          temperature: 0.3,
+          temperature: 0.2, // Lower temperature for more consistent scoring
           topK: 40,
           topP: 0.95,
-          maxOutputTokens: 1024,
+          maxOutputTokens: 2048, // Increased for detailed responses
         }
       }),
     });
@@ -298,6 +351,16 @@ async function calculateMatchScore(event: any, sponsor: any) {
       if (jsonMatch) {
         const result = JSON.parse(jsonMatch[0]);
         console.log('Gemini API match result:', result);
+        
+        // Validate and sanitize the result
+        if (result.score && result.reasoning && result.factors) {
+          return {
+            score: Math.min(100, Math.max(0, Math.round(result.score))),
+            reasoning: result.reasoning.substring(0, 500), // Limit reasoning length
+            factors: result.factors,
+            insights: result.insights || ''
+          };
+        }
         return result;
       }
     }
@@ -313,62 +376,203 @@ async function calculateMatchScore(event: any, sponsor: any) {
 function calculateFallbackMatchScore(event: any, sponsor: any) {
   console.log('Using fallback match scoring');
   
-  let score = 50; // Base score
+  let score = 40; // Base score
   const factors = {
+    theme_compatibility: 50,
+    audience_alignment: 50,
     budget_compatibility: 50,
-    category_alignment: 50,
-    audience_fit: 50,
-    location_proximity: 50,
+    geographic_proximity: 50,
+    industry_preferences: 50,
     marketing_alignment: 50
   };
 
+  // Theme/Category compatibility (25% weight)
+  if (event.category && sponsor.industry) {
+    const compatibility = getCategoryIndustryCompatibility(event.category, sponsor.industry);
+    factors.theme_compatibility = compatibility;
+    score += (compatibility - 50) * 0.25;
+  }
+
+  // Audience alignment (20% weight)
+  if (event.audience_size && sponsor.target_demographics) {
+    const alignment = getAudienceAlignment(event, sponsor);
+    factors.audience_alignment = alignment;
+    score += (alignment - 50) * 0.20;
+  }
+
   // Budget compatibility
   if (event.budget_range && sponsor.budget_range) {
-    if (event.budget_range === sponsor.budget_range) {
-      factors.budget_compatibility = 95;
-      score += 20;
-    } else {
-      factors.budget_compatibility = 70;
-      score += 10;
-    }
+    const compatibility = getBudgetCompatibility(event.budget_range, sponsor.budget_range);
+    factors.budget_compatibility = compatibility;
+    score += (compatibility - 50) * 0.20;
   }
 
-  // Category/Industry alignment
-  if (event.category && sponsor.industry) {
-    const categoryKeywords = event.category.toLowerCase().split(' ');
-    const industryKeywords = sponsor.industry.toLowerCase().split(' ');
-    const hasMatch = categoryKeywords.some(keyword => 
-      industryKeywords.some(ind => ind.includes(keyword) || keyword.includes(ind))
-    );
-    if (hasMatch) {
-      factors.category_alignment = 85;
-      score += 15;
-    }
+  // Geographic proximity (15% weight)
+  if (event.location && sponsor.location) {
+    const proximity = getGeographicProximity(event.location, sponsor.location);
+    factors.geographic_proximity = proximity;
+    score += (proximity - 50) * 0.15;
   }
 
-  // Audience size consideration
-  if (event.audience_size && event.audience_size > 100) {
-    factors.audience_fit = 80;
-    score += 10;
+  // Industry preferences (10% weight)
+  if (sponsor.industry && event.category) {
+    const preference = getIndustryPreference(sponsor.industry, event.category);
+    factors.industry_preferences = preference;
+    score += (preference - 50) * 0.10;
   }
 
-  // Marketing goals alignment
+  // Marketing goals alignment (10% weight)
   if (sponsor.marketing_goals && event.description) {
-    const goalKeywords = sponsor.marketing_goals.toLowerCase();
-    const eventDesc = event.description.toLowerCase();
-    if (goalKeywords.includes('brand awareness') || eventDesc.includes('networking')) {
-      factors.marketing_alignment = 85;
-      score += 15;
-    }
+    const alignment = getMarketingAlignment(sponsor.marketing_goals, event.description);
+    factors.marketing_alignment = alignment;
+    score += (alignment - 50) * 0.10;
   }
 
   score = Math.min(100, Math.max(0, score));
 
   return {
     score: Math.round(score),
-    reasoning: `Match score calculated based on budget compatibility (${factors.budget_compatibility}%), category alignment (${factors.category_alignment}%), audience fit (${factors.audience_fit}%), and marketing goals alignment (${factors.marketing_alignment}%). ${score > 75 ? 'Excellent match with strong alignment across multiple factors.' : score > 60 ? 'Good match with reasonable compatibility.' : 'Fair match with some alignment potential.'}`,
-    factors
+    reasoning: `Match score calculated using weighted criteria: theme compatibility (${factors.theme_compatibility}%), audience alignment (${factors.audience_alignment}%), budget compatibility (${factors.budget_compatibility}%), geographic proximity (${factors.geographic_proximity}%), industry preferences (${factors.industry_preferences}%), and marketing alignment (${factors.marketing_alignment}%). ${score > 80 ? 'Excellent match with strong alignment across multiple factors.' : score > 65 ? 'Good match with reasonable compatibility.' : score > 50 ? 'Fair match with some alignment potential.' : 'Limited compatibility - consider if strategic value exists.'}`,
+    factors,
+    insights: score > 75 ? 'High potential for successful partnership with mutual benefits.' : 'Consider discussing specific collaboration opportunities to maximize value.'
   };
+}
+
+function getCategoryIndustryCompatibility(category: string, industry: string): number {
+  const compatibilityMatrix: Record<string, Record<string, number>> = {
+    'technology': { 'Technology': 95, 'Finance': 75, 'Healthcare': 70, 'Education': 85 },
+    'business': { 'Finance': 90, 'Technology': 80, 'Consulting': 95, 'Real Estate': 75 },
+    'cultural': { 'Media & Entertainment': 90, 'Arts': 95, 'Tourism': 85, 'Food & Beverage': 80 },
+    'sports': { 'Sports': 95, 'Healthcare': 80, 'Energy': 70, 'Retail': 75 },
+    'academic': { 'Education': 95, 'Technology': 85, 'Healthcare': 80, 'Research': 90 }
+  };
+
+  const categoryLower = category.toLowerCase();
+  const industryMatrix = compatibilityMatrix[categoryLower];
+  
+  if (industryMatrix && industryMatrix[industry]) {
+    return industryMatrix[industry];
+  }
+  
+  // Fallback to keyword matching
+  const categoryWords = categoryLower.split(' ');
+  const industryWords = industry.toLowerCase().split(' ');
+  const hasMatch = categoryWords.some(word => 
+    industryWords.some(ind => ind.includes(word) || word.includes(ind))
+  );
+  
+  return hasMatch ? 75 : 45;
+}
+
+function getAudienceAlignment(event: any, sponsor: any): number {
+  let alignment = 50;
+  
+  // Audience size scoring
+  if (event.audience_size) {
+    if (event.audience_size >= 1000) alignment += 20;
+    else if (event.audience_size >= 500) alignment += 15;
+    else if (event.audience_size >= 200) alignment += 10;
+    else if (event.audience_size >= 100) alignment += 5;
+  }
+  
+  // Demographics matching
+  if (sponsor.target_demographics && Array.isArray(sponsor.target_demographics)) {
+    const eventDemographics = ['College Students', 'Young Professionals', 'Tech Enthusiasts'];
+    const matches = sponsor.target_demographics.filter(demo => 
+      eventDemographics.some(eventDemo => 
+        eventDemo.toLowerCase().includes(demo.toLowerCase()) ||
+        demo.toLowerCase().includes(eventDemo.toLowerCase())
+      )
+    );
+    alignment += matches.length * 10;
+  }
+  
+  return Math.min(95, alignment);
+}
+
+function getBudgetCompatibility(eventBudget: string, sponsorBudget: string): number {
+  const budgetRanges = [
+    '$500 - $1,000',
+    '$1,000 - $2,500', 
+    '$2,500 - $5,000',
+    '$5,000 - $10,000',
+    '$10,000 - $25,000',
+    '$25,000+'
+  ];
+  
+  const eventIndex = budgetRanges.indexOf(eventBudget);
+  const sponsorIndex = budgetRanges.indexOf(sponsorBudget);
+  
+  if (eventIndex === -1 || sponsorIndex === -1) return 50;
+  
+  const difference = Math.abs(eventIndex - sponsorIndex);
+  
+  if (difference === 0) return 95;
+  if (difference === 1) return 80;
+  if (difference === 2) return 65;
+  return 40;
+}
+
+function getGeographicProximity(eventLocation: string, sponsorLocation: string): number {
+  // Simplified geographic matching - in production, use proper geocoding
+  if (eventLocation.toLowerCase() === sponsorLocation.toLowerCase()) return 95;
+  
+  const eventWords = eventLocation.toLowerCase().split(/[\s,]+/);
+  const sponsorWords = sponsorLocation.toLowerCase().split(/[\s,]+/);
+  
+  const hasCommonLocation = eventWords.some(word => 
+    sponsorWords.some(sponsorWord => 
+      word.includes(sponsorWord) || sponsorWord.includes(word)
+    )
+  );
+  
+  return hasCommonLocation ? 80 : 45;
+}
+
+function getIndustryPreference(industry: string, category: string): number {
+  // Industry-specific preferences for event categories
+  const preferences: Record<string, string[]> = {
+    'Technology': ['technology', 'academic', 'workshop', 'conference'],
+    'Finance': ['business', 'academic', 'networking', 'conference'],
+    'Healthcare': ['academic', 'sports', 'wellness', 'research'],
+    'Education': ['academic', 'workshop', 'conference', 'cultural'],
+    'Media & Entertainment': ['cultural', 'arts', 'music', 'sports']
+  };
+  
+  const industryPrefs = preferences[industry] || [];
+  const categoryLower = category.toLowerCase();
+  
+  const hasPreference = industryPrefs.some(pref => 
+    categoryLower.includes(pref) || pref.includes(categoryLower)
+  );
+  
+  return hasPreference ? 85 : 45;
+}
+
+function getMarketingAlignment(marketingGoals: string, eventDescription: string): number {
+  const goals = marketingGoals.toLowerCase();
+  const description = eventDescription.toLowerCase();
+  
+  const alignmentKeywords = [
+    { keywords: ['brand awareness', 'visibility', 'exposure'], weight: 20 },
+    { keywords: ['networking', 'community', 'engagement'], weight: 15 },
+    { keywords: ['innovation', 'technology', 'future'], weight: 15 },
+    { keywords: ['education', 'learning', 'development'], weight: 10 },
+    { keywords: ['leadership', 'professional', 'career'], weight: 10 }
+  ];
+  
+  let alignment = 50;
+  
+  alignmentKeywords.forEach(({ keywords, weight }) => {
+    const hasGoalKeyword = keywords.some(keyword => goals.includes(keyword));
+    const hasDescKeyword = keywords.some(keyword => description.includes(keyword));
+    
+    if (hasGoalKeyword && hasDescKeyword) {
+      alignment += weight;
+    }
+  });
+  
+  return Math.min(95, alignment);
 }
 
 async function getSingleMatch(supabase: any, eventId: string, sponsorId: string) {
@@ -384,7 +588,7 @@ async function getSingleMatch(supabase: any, eventId: string, sponsorId: string)
     .single();
 
   return new Response(JSON.stringify({ recommendation }), {
-    headers: { 'Content-Type': 'application/json' },
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
   });
 }
 
@@ -410,6 +614,6 @@ async function updateMatchStatus(supabase: any, eventId: string, sponsorId: stri
   }
 
   return new Response(JSON.stringify({ recommendation: data }), {
-    headers: { 'Content-Type': 'application/json' },
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
   });
 }

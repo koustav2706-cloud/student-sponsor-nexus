@@ -10,46 +10,62 @@ const ForStudents = () => {
       <Navigation />
       <main className="pt-16">
         {/* Hero Section */}
-        <section className="bg-gradient-hero py-20">
+        <section className="relative py-24 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-hero opacity-90"></div>
+          <div className="absolute inset-0 bg-mesh-pattern opacity-20"></div>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-4xl md:text-6xl font-bold text-primary-foreground mb-6" style={{ textShadow: '0 4px 8px rgba(0,0,0,0.4)' }}>
+            <h1 className="relative z-10 text-5xl md:text-7xl font-bold text-overlay mb-8">
               Find Perfect{" "}
               <span className="bg-gradient-to-r from-accent to-accent-light bg-clip-text text-transparent">
                 Sponsors
               </span>{" "}
               for Your Events
             </h1>
-            <p className="text-xl text-primary-foreground mb-8 max-w-3xl mx-auto" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.3)', color: 'hsl(220, 14%, 90%)' }}>
+            <p className="relative z-10 text-xl md:text-2xl text-overlay mb-10 max-w-4xl mx-auto leading-relaxed">
               Connect your student organization with sponsors who align with your values and goals.
             </p>
-            <Button variant="accent" size="xl" asChild>
+            <Button variant="accent" size="xxl" asChild className="relative z-10">
               <Link to="/auth">
                 Get Started Free
-                <Users className="ml-2 h-5 w-5" />
+                <Users className="ml-3 h-6 w-6" />
               </Link>
             </Button>
           </div>
         </section>
 
         {/* Features for Students */}
-        <section className="py-16">
+        <section className="py-24 bg-gradient-subtle">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold text-center mb-12" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.3)' }}>How It Works for Student Organizations</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <Card className="p-6 text-center neumorphic-hover neumorphic transition-all duration-300">
-                <Search className="h-12 w-12 text-primary mx-auto mb-4" />
-                <h3 className="text-xl font-semibold mb-2" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.2)' }}>Create Your Profile</h3>
-                <p className="text-muted-foreground" style={{ color: 'hsl(220, 14%, 85%)' }}>Showcase your events, audience, and impact</p>
+            <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-overlay">
+              How It Works for Student Organizations
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+              <Card className="p-8 text-center hover-lift neumorphic transition-all duration-300 group">
+                <div className="w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Search className="h-8 w-8 text-primary-foreground" />
+                </div>
+                <h3 className="text-2xl font-bold mb-4 text-overlay">Create Your Profile</h3>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  Showcase your events, audience, and impact with detailed analytics
+                </p>
               </Card>
-              <Card className="p-6 text-center neumorphic-hover neumorphic transition-all duration-300">
-                <Trophy className="h-12 w-12 text-primary mx-auto mb-4" />
-                <h3 className="text-xl font-semibold mb-2" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.2)' }}>Get Matched</h3>
-                <p className="text-muted-foreground" style={{ color: 'hsl(220, 14%, 85%)' }}>Our AI finds sponsors perfect for your events</p>
+              <Card className="p-8 text-center hover-lift neumorphic transition-all duration-300 group md:-translate-y-4">
+                <div className="w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Trophy className="h-8 w-8 text-primary-foreground" />
+                </div>
+                <h3 className="text-2xl font-bold mb-4 text-overlay">Get Matched</h3>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  Our AI finds sponsors perfect for your events with 95% accuracy
+                </p>
               </Card>
-              <Card className="p-6 text-center neumorphic-hover neumorphic transition-all duration-300">
-                <Star className="h-12 w-12 text-primary mx-auto mb-4" />
-                <h3 className="text-xl font-semibold mb-2" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.2)' }}>Build Partnerships</h3>
-                <p className="text-muted-foreground" style={{ color: 'hsl(220, 14%, 85%)' }}>Create lasting relationships with top brands</p>
+              <Card className="p-8 text-center hover-lift neumorphic transition-all duration-300 group">
+                <div className="w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Star className="h-8 w-8 text-primary-foreground" />
+                </div>
+                <h3 className="text-2xl font-bold mb-4 text-overlay">Build Partnerships</h3>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  Create lasting relationships with top brands and secure funding
+                </p>
               </Card>
             </div>
           </div>

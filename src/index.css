@@ -6,6 +6,20 @@
 All colors MUST be HSL for consistency across light/dark modes.
 */
 
+/* Enhanced Typography for Better Readability */
+:root {
+  --font-size-xs: 0.875rem;    /* 14px */
+  --font-size-sm: 1rem;        /* 16px - minimum body text */
+  --font-size-base: 1.125rem;  /* 18px - enhanced body text */
+  --font-size-lg: 1.25rem;     /* 20px */
+  --font-size-xl: 1.5rem;      /* 24px */
+  --font-size-2xl: 1.875rem;   /* 30px */
+  --font-size-3xl: 2.25rem;    /* 36px */
+  --font-size-4xl: 3rem;       /* 48px */
+  --font-size-5xl: 3.75rem;    /* 60px */
+  --font-size-6xl: 4.5rem;     /* 72px */
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -22,6 +36,13 @@ All colors MUST be HSL for consistency across light/dark modes.
     --primary-foreground: 0 0% 100%;
     --primary-light: 240 100% 76%;
     --primary-dark: 234 67% 45%;
+
+    /* Enhanced High Contrast Colors */
+    --text-high-contrast: 220 14% 5%;
+    --text-medium-contrast: 220 14% 25%;
+    --text-overlay: 0 0% 100%;
+    --text-shadow-light: 0 2px 4px rgba(0, 0, 0, 0.3);
+    --text-shadow-heavy: 0 2px 8px rgba(0, 0, 0, 0.6);
 
     /* Modern Secondary Colors */
     --secondary: 220 14% 96%;
@@ -82,6 +103,11 @@ All colors MUST be HSL for consistency across light/dark modes.
   .dark {
     --background: 220 27% 8%;
     --foreground: 220 14% 96%;
+    
+    /* Enhanced Dark Mode Contrast */
+    --text-high-contrast: 220 14% 98%;
+    --text-medium-contrast: 220 14% 85%;
+    --text-overlay: 0 0% 100%;
 
     --card: 220 27% 8%;
     --card-foreground: 220 14% 96%;
@@ -133,37 +159,76 @@ All colors MUST be HSL for consistency across light/dark modes.
   body {
     @apply bg-background text-foreground;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    line-height: 1.6;
+    line-height: 1.7; /* Enhanced line height for readability */
     font-weight: 400;
+    font-size: var(--font-size-base); /* Minimum 18px body text */
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Force dark mode styles */
-  :root {
-    color-scheme: dark;
-  }
-
   /* Enhanced text visibility */
   h1, h2, h3, h4, h5, h6 {
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: var(--text-shadow-light);
+    font-weight: 700; /* Bold headings for better visibility */
+    color: hsl(var(--text-high-contrast));
   }
 
-  /* Improved contrast for all text */
+  /* Enhanced body text contrast */
+  p, span, div, li, td {
+    color: hsl(var(--text-medium-contrast));
+    font-size: var(--font-size-base);
+  }
+
+  /* High contrast for important text */
   .text-muted-foreground {
-    color: hsl(220, 14%, 85%) !important;
+    color: hsl(var(--text-medium-contrast)) !important;
+    font-size: var(--font-size-sm) !important;
   }
 
-  /* Better visibility for cards and backgrounds */
+  /* Text overlay styles for images */
+  .text-overlay {
+    color: hsl(var(--text-overlay));
+    text-shadow: var(--text-shadow-heavy);
+    font-weight: 600;
+  }
+
+  /* Enhanced card visibility */
   .bg-card {
-    background: linear-gradient(145deg, hsl(220, 27%, 12%), hsl(220, 17%, 20%)) !important;
-    border: 1px solid hsl(220, 17%, 25%) !important;
+    background: hsl(var(--card)) !important;
+    border: 2px solid hsl(var(--border)) !important;
+    box-shadow: var(--shadow-card);
   }
 
-  /* Enhanced image visibility */
+  /* Image optimization and lazy loading */
   img {
-    filter: brightness(1.1) contrast(1.1);
+    filter: brightness(1.05) contrast(1.05);
+    transition: filter 0.3s ease;
+  }
+
+  img[loading="lazy"] {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  img[loading="lazy"].loaded {
+    opacity: 1;
+  }
+
+  /* Image loading states */
+  .image-loading {
+    background: linear-gradient(90deg, hsl(var(--muted)) 25%, hsl(var(--muted-foreground) / 0.1) 50%, hsl(var(--muted)) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  .image-error {
+    background: hsl(var(--muted));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: hsl(var(--muted-foreground));
+    font-size: var(--font-size-sm);
   }
 
   /* Enhanced scrollbar */
@@ -187,25 +252,40 @@ All colors MUST be HSL for consistency across light/dark modes.
   /* Premium Typography Hierarchy */
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Space Grotesk', 'Inter', sans-serif;
-    font-weight: 600;
+    font-weight: 700; /* Increased weight for better visibility */
     letter-spacing: -0.025em;
-    line-height: 1.2;
+    line-height: 1.3; /* Improved line height */
   }
 
   h1 {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 700;
+    font-size: clamp(3rem, 6vw, 5rem); /* Larger headings */
+    font-weight: 800;
     letter-spacing: -0.05em;
   }
 
   h2 {
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 600;
+    font-size: clamp(2.5rem, 5vw, 4rem); /* Larger headings */
+    font-weight: 700;
     letter-spacing: -0.03em;
   }
 
   h3 {
+    font-size: clamp(1.875rem, 4vw, 2.5rem); /* Larger headings */
+    font-weight: 700;
+  }
+
+  h4 {
     font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 600;
+  }
+
+  h5 {
+    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+    font-weight: 600;
+  }
+
+  h6 {
+    font-size: clamp(1.125rem, 2vw, 1.25rem);
     font-weight: 600;
   }
 
@@ -229,6 +309,12 @@ All colors MUST be HSL for consistency across light/dark modes.
     opacity: 0;
   }
 
+  .animate-fade-in-up {
+    animation: fade-in-up 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
   .animate-slide-up {
     animation: slide-up 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
     opacity: 0;
@@ -249,6 +335,45 @@ All colors MUST be HSL for consistency across light/dark modes.
 
   .animate-bounce-slow {
     animation: bounce 3s ease-in-out infinite;
+  }
+
+  /* Enhanced hover states */
+  .hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-floating);
+  }
+
+  /* Loading states */
+  .loading-skeleton {
+    background: linear-gradient(90deg, hsl(var(--muted)) 25%, hsl(var(--muted-foreground) / 0.1) 50%, hsl(var(--muted)) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 8px;
+  }
+
+  /* Match score indicators */
+  .match-score-excellent {
+    background: linear-gradient(135deg, hsl(142, 76%, 36%), hsl(142, 76%, 46%));
+    color: white;
+  }
+
+  .match-score-good {
+    background: linear-gradient(135deg, hsl(45, 93%, 58%), hsl(45, 93%, 68%));
+    color: white;
+  }
+
+  .match-score-fair {
+    background: linear-gradient(135deg, hsl(25, 95%, 53%), hsl(25, 95%, 63%));
+    color: white;
+  }
+
+  .match-score-poor {
+    background: linear-gradient(135deg, hsl(0, 84%, 60%), hsl(0, 84%, 70%));
+    color: white;
   }
 
   /* Neumorphic Elements */
@@ -301,6 +426,16 @@ All colors MUST be HSL for consistency across light/dark modes.
   .delay-400 { animation-delay: 0.4s; }
   .delay-500 { animation-delay: 0.5s; }
   .delay-600 { animation-delay: 0.6s; }
+
+  /* 8px Grid System */
+  .space-8 { margin: 8px; }
+  .space-16 { margin: 16px; }
+  .space-24 { margin: 24px; }
+  .space-32 { margin: 32px; }
+  .space-40 { margin: 40px; }
+  .space-48 { margin: 48px; }
+  .space-56 { margin: 56px; }
+  .space-64 { margin: 64px; }
 }
 
 /* Premium Keyframes */
@@ -312,6 +447,17 @@ All colors MUST be HSL for consistency across light/dark modes.
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -384,4 +530,49 @@ All colors MUST be HSL for consistency across light/dark modes.
   );
   background-size: 200% 100%;
   animation: shimmer 2s ease-in-out infinite;
+}
+
+/* Responsive Typography */
+@media (max-width: 768px) {
+  body {
+    font-size: var(--font-size-sm); /* 16px minimum on mobile */
+  }
+  
+  h1 {
+    font-size: clamp(2rem, 8vw, 3rem);
+  }
+  
+  h2 {
+    font-size: clamp(1.75rem, 6vw, 2.5rem);
+  }
+  
+  h3 {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  :root {
+    --foreground: 0 0% 0%;
+    --background: 0 0% 100%;
+    --border: 0 0% 0%;
+  }
+  
+  .dark {
+    --foreground: 0 0% 100%;
+    --background: 0 0% 0%;
+    --border: 0 0% 100%;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

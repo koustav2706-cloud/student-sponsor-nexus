@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 
-import NotificationCenter from "@/components/notifications/NotificationCenter";
+import { NotificationSystem } from "@/components/ui/notification-system";
 import MessageCenter from "@/components/messaging/MessageCenter";
 import { Menu, X, Zap, LogOut } from "lucide-react";
 
@@ -49,7 +49,7 @@ const Navigation = () => {
           <div className="hidden md:flex items-center gap-3">
             {user && (
               <>
-                <NotificationCenter />
+                <NotificationSystem />
                 <MessageCenter />
               </>
             )}
