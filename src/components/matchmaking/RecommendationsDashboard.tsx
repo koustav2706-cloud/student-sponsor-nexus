@@ -497,10 +497,3 @@ export function RecommendationsDashboard() {
     </div>
   );
 }
-            />
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
